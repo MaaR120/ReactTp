@@ -1,15 +1,19 @@
 
-
-const Footer = () => {
+export const Footer = () => {
   return (
-    <div style={{background:"grey",color:"black",padding:"30px"}}>
-      <div>
-        <h1>
-          Contact Us
-        </h1>
-        <h3>example@info.com</h3>
-      </div>
+    <footer className="mt-auto py-3 bg-dark text-white">
+    <div className="container">
+        <div className="col-md-6 col-12">
+    <h3>Our Company</h3>
+    <p>Some information about your company.</p>
+        </div>
+    <div className="col-md-6 col-12">
+    <h3>Contact Us</h3>
+    <p>Email: info@yourcompany.com</p>
+    <p>Phone: (123) 456-7890</p>
     </div>
+    </div>
+    </footer>
   )
 }
 

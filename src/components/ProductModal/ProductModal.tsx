@@ -7,12 +7,16 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { ProductService } from "../../services/ProductService";
 
+//Notificaciones
+import {toast} from 'react-toastify'
+
 type ProductModalProps = {
   show: boolean;
   onHide: () => void;
   title: string;
   modalType: ModalType;
   prod: Product;
+  refreshData: React.Dispatch<React.SetStateAction<boolean>>
 };
 const ProductModal = ({
   show,
@@ -20,6 +24,7 @@ const ProductModal = ({
   title,
   modalType,
   prod,
+  refreshData
 }: ProductModalProps) => {
   //CREATE ACTUALIZAR
   const handleSaveUpdate = async (pro: Product) => {
@@ -30,21 +35,34 @@ const ProductModal = ({
       } else {
         await ProductService.updateProduct(pro.id, pro);
       }
+      toast.success(isNew ? "Producto Creado" : "Producto Actualizado",{
+        position:"top-center",
+      });
+
+
       onHide();
+      refreshData(prevState => !prevState);
     } catch (error) {
       console.error(error);
+      toast.error("Ha ocurrido un Error");
     }
   };
 
-  //DELETE
+//DELETE
 const handleDelete = async () => {
-  try {
-  await ProductService.deleteProduct (prod.id);
-  onHide();
+
+  try{
+      await ProductService.deleteProduct(prod.id);
+      toast.success("Producto eliminado con éxito",{
+          position: "top-center",
+      });
+      onHide();
+      refreshData(prevState => !prevState);
   } catch (error) {
-  console.error(error);
+      console.error(error);
+      toast.error("Ha ocurrido un error D:");
   }
-}
+};
 
   //Yup, esquema de validación.
   const validationSchema = () => {
@@ -78,7 +96,7 @@ const handleDelete = async () => {
           </Modal.Header>
           <Modal.Body>
             <p>
-              ¿Está seguro que desea eliminar el producto <br />
+              ¿Está seguro que desea eliminar el producto? <br />
               <strong> {prod.title} </strong>?
             </p>
           </Modal.Body>
@@ -201,14 +219,13 @@ const handleDelete = async () => {
 
               <Modal.Footer className="mt-4">
                 <Button variant="secondary" onClick={onHide}>
-                  Cancelar{" "}
+                  Cancelar
                 </Button>
                 <Button
                   variant="primary"
                   type="submit"
-                  disabled={!formik.isValid}
-                >
-                  Guardar{" "}
+                  disabled={!formik.isValid}>
+                  Guardar
                 </Button>
               </Modal.Footer>
             </Form>

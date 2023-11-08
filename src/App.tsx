@@ -2,10 +2,11 @@ import { BrowserRouter as Router } from "react-router-dom";
 import Header from "./components/Header/Header";
 import AppRoutes from "./routes/AppRoutes";
 import Footer from "./components/Footer/Footer";
-import { Container, ToastContainer } from "react-bootstrap";
+import { ToastContainer } from "react-toastify"
 import { Suspense } from "react";
 import Loader from "./components/Loader/Loader";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
+import { Container } from "react-bootstrap";
 
 function App() {
   return (

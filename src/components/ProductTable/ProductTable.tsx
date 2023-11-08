@@ -16,9 +16,7 @@ const ProductTable = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   //Variable que actualiza los datos de la tabla luego de cada operacion
-  const [refreshData,setRefreshData]=useState(false);
-
-
+  const [refreshData, setRefreshData] = useState(false);
 
   //Este hook se va a ejecutar cada vez que se renderice el componente
   //o refreshData cambie de estado
@@ -35,36 +33,34 @@ const ProductTable = () => {
   //Test, este log esta modificado para que muestre los datos de una manera mas legible
   console.log(JSON.stringify(products, null, 2));
   //stringify es convertir un objeto JavaScript en una cadena JSON
-  
 
-//const para inicializar un producto por defecto y evitar el "undefined"
-//Vayamos un crear un producto nuevo
-const initializableNewProduct = (): Product => {
-  return {
-    id: 0,
-    title: "",
-    price: 0,
-    description: "",
-    category: "",
-    image: "",
+  //const para inicializar un producto por defecto y evitar el "undefined"
+  //Vayamos un crear un producto nuevo
+  const initializableNewProduct = (): Product => {
+    return {
+      id: 0,
+      title: "",
+      price: 0,
+      description: "",
+      category: "",
+      image: "",
+    };
   };
-};
 
-//Producto seleccionado que se va pasar como prop al Modal
-const [product, setProduct] = useState<Product>(initializableNewProduct);
-//const para manejar el estado del Modal
-const [showModal, setShowModal] = useState(false);
-const [modalType, setModalType] = useState<ModalType>(ModalType.NONE);
-const [title, setTitle] = useState("");
+  //Producto seleccionado que se va pasar como prop al Modal
+  const [product, setProduct] = useState<Product>(initializableNewProduct);
+  //const para manejar el estado del Modal
+  const [showModal, setShowModal] = useState(false);
+  const [modalType, setModalType] = useState<ModalType>(ModalType.NONE);
+  const [title, setTitle] = useState("");
 
-//Logica del modal
-const handleClick = (newTitle: string, prod: Product, modal: ModalType) => {
-  setTitle(newTitle);
-  setModalType(modal);
-  setProduct(prod);
-  setShowModal(true);
-};
-
+  //Logica del modal
+  const handleClick = (newTitle: string, prod: Product, modal: ModalType) => {
+    setTitle(newTitle);
+    setModalType(modal);
+    setProduct(prod);
+    setShowModal(true);
+  };
 
   return (
     <>
@@ -77,7 +73,6 @@ const handleClick = (newTitle: string, prod: Product, modal: ModalType) => {
           )
         }
       >
-        
         Nuevo producto
       </Button>
       {isLoading ? (
@@ -109,11 +104,22 @@ const handleClick = (newTitle: string, prod: Product, modal: ModalType) => {
                     style={{ width: "50px" }}
                   />
                 </td>
-                <td> <EditButton onClick={() => handleClick("Editar producto", product, ModalType.UPDATE)}/> </td>
-                <td> <DeleteButton onClick={() => handleClick("Borrar producto", product, ModalType.DELETE)} /> </td>
-              
-
-              
+                <td>
+                  {" "}
+                  <EditButton
+                    onClick={() =>
+                      handleClick("Editar producto", product, ModalType.UPDATE)
+                    }
+                  />{" "}
+                </td>
+                <td>
+                  {" "}
+                  <DeleteButton
+                    onClick={() =>
+                      handleClick("Borrar producto", product, ModalType.DELETE)
+                    }
+                  />{" "}
+                </td>
               </tr>
             ))}
           </tbody>
